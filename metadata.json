@@ -1,0 +1,6 @@
+{
+  "name": "Studio.Alpha Portfolio",
+  "description": "个人多媒体与平面设计作品集 (Personal Multimedia & Graphic Design Portfolio)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
