@@ -619,6 +619,10 @@ export default function ItemModal({
           </div>
         );
       }
+      // 小红书：平台禁止 iframe 嵌入，隐藏左侧媒体区域，跳转按钮放在右侧元数据面板底部
+      if (allItems[currentIndex]?.platform === '小红书') {
+        return null;
+      }
       // 其他外链：移动端 iframe 展示
       return (
         <div className="flex flex-col gap-3 w-full animate-fade-in">
@@ -692,15 +696,15 @@ export default function ItemModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ type: "spring", stiffness: 100, damping: 15 }}
-        className="w-full max-w-7xl flex flex-col md:flex-row gap-8 items-stretch pt-12 pb-16 outline-none"
+        className={`w-full max-w-7xl flex flex-col md:flex-row gap-8 items-stretch pt-12 pb-16 outline-none ${allItems[currentIndex]?.platform === '小红书' ? 'md:justify-center' : ''}`}
       >
         {/* Left Half: Embedded Medium content */}
-        <div className="flex-[3] flex items-center justify-center min-w-0">
+        <div className={`flex-[3] flex items-center justify-center min-w-0 ${allItems[currentIndex]?.platform === '小红书' ? 'md:hidden' : ''}`}>
           {renderItemMedia()}
         </div>
 
         {/* Right Half: Details Metapanel */}
-        <div className="w-full md:w-[380px] shrink-0 flex flex-col justify-between gap-6 border-t md:border-t-0 md:border-l border-[#E5E5E5] dark:border-zinc-800 pt-6 md:pt-0 md:pl-8 text-zinc-650 dark:text-zinc-350">
+        <div className={`w-full md:w-[380px] shrink-0 flex flex-col justify-between gap-6 border-t border-[#E5E5E5] dark:border-zinc-800 pt-6 ${allItems[currentIndex]?.platform === '小红书' ? '' : 'md:border-t-0 md:border-l md:pl-8'} text-zinc-650 dark:text-zinc-350`}>
           <div className="space-y-4">
             <span className="inline-block px-2.5 py-1 bg-zinc-100 dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 font-mono text-[9px] font-bold rounded uppercase">
               {type} FILE IN-USE
@@ -770,6 +774,24 @@ export default function ItemModal({
                 <span className="text-zinc-800 dark:text-zinc-300 mt-0.5 block font-medium">#A-00{currentIndex + 1}</span>
               </div>
             </div>
+
+            {/* 小红书专属：底部跳转按钮 */}
+            {allItems[currentIndex]?.platform === '小红书' && (
+              <div className="mt-6">
+                <a
+                  href={src}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#1A1A1A] dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-bold shadow-sm transition-colors cursor-pointer border border-[#1A1A1A] dark:border-white"
+                >
+                  <span>在小红书网页版中打开</span>
+                  <ArrowRight size={14} />
+                </a>
+                <p className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 text-center mt-3 leading-relaxed">
+                  小红书平台禁止第三方页面 iframe 直接嵌入，请点击上方按钮跳转官方页面浏览原帖
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
