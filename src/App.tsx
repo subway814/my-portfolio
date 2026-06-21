@@ -75,6 +75,56 @@ export default function App() {
     });
   };
 
+  const handleNavigateCategory = (categoryKey: SubPageKey, itemTitle: string) => {
+    // 先切换到目标分类
+    setCurrentCategory(categoryKey);
+    // 关闭当前modal，等待新页面渲染完成后，根据title定位并打开
+    setModalState(prev => ({ ...prev, isOpen: false }));
+
+    setTimeout(() => {
+      // 从STAGES中获取目标分类数据
+      const targetStage = STAGES[categoryKey];
+      if (!targetStage) return;
+
+      // 遍历categories查找匹配title的item
+      let targetItem: PortfolioItem | null = null;
+      let targetIndex = -1;
+      let flatItems: PortfolioItem[] = [];
+
+      if (targetStage.categories) {
+        Object.values(targetStage.categories).forEach((items) => {
+          items.forEach((item, _idx) => {
+            if (!targetItem && item.title === itemTitle) {
+              targetItem = item;
+              targetIndex = flatItems.length;
+            }
+            flatItems.push(item);
+          });
+        });
+      } else if (targetStage.items) {
+        flatItems = targetStage.items;
+        targetIndex = flatItems.findIndex((item) => item.title === itemTitle);
+        if (targetIndex !== -1) targetItem = flatItems[targetIndex];
+      }
+
+      if (targetItem) {
+        setModalState({
+          isOpen: true,
+          type: targetItem.type,
+          src: targetItem.src,
+          title: targetItem.title,
+          fullDesc: targetItem.fullDesc || '',
+          currentIndex: targetIndex,
+          allItems: flatItems,
+          slides: targetItem.slides,
+          categoryKey
+        });
+        // 滚动到顶部确保modal可见
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 350);
+  };
+
   const handleCloseModal = () => {
     setModalState(prev => ({ ...prev, isOpen: false }));
   };
@@ -119,10 +169,11 @@ export default function App() {
           <div className="hidden md:flex items-center gap-2">
             {[
               { key: 'video', label: '视频作品', num: '01' },
-              { key: 'design', label: '平面设计', num: '02' },
-              { key: 'photo', label: '摄影作品', num: '03' },
-              { key: 'media', label: '新媒体作品', num: '04' },
-              { key: 'contact', label: '取得联系', num: '05' }
+              { key: 'project', label: '项目经历', num: '02' },
+              { key: 'design', label: '平面作品', num: '03' },
+              { key: 'photo', label: '摄影作品', num: '04' },
+              { key: 'media', label: '新媒体作品', num: '05' },
+              { key: 'contact', label: '取得联系', num: '06' }
             ].map((item) => (
               <button
                 key={item.key}
@@ -163,10 +214,11 @@ export default function App() {
             >
               {[
                 { key: 'video', label: '视频作品', num: '01' },
-                { key: 'design', label: '平面设计', num: '02' },
-                { key: 'photo', label: '摄影作品', num: '03' },
-                { key: 'media', label: '新媒体作品', num: '04' },
-                { key: 'contact', label: '取得联系', num: '05' }
+                { key: 'project', label: '项目经历', num: '02' },
+                { key: 'design', label: '平面作品', num: '03' },
+                { key: 'photo', label: '摄影作品', num: '04' },
+                { key: 'media', label: '新媒体作品', num: '05' },
+                { key: 'contact', label: '取得联系', num: '06' }
               ].map((item) => (
                 <button
                   key={item.key}
@@ -245,6 +297,7 @@ export default function App() {
               onNavigate={handleNavigateModal}
               slides={modalState.slides}
               categoryKey={modalState.categoryKey}
+              onNavigateCategory={handleNavigateCategory}
             />
           </motion.div>
         )}

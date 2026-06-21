@@ -319,13 +319,15 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
         {categoryKey !== 'contact' && stageData.categories && (
           <div className={categoryKey === 'photo' ? 'grid grid-cols-1 md:grid-cols-2 gap-12' : 'flex flex-col gap-20'}>
             {Object.entries(stageData.categories).map(([catName, list]) => (
-              <div key={catName} className="category-section scroll-mt-28 flex flex-col animate-fade-in">
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-zinc-800 dark:bg-zinc-200" />
-                  <h3 className="text-lg font-bold tracking-wider font-mono uppercase text-zinc-500 dark:text-zinc-400">
-                    {catName}
-                  </h3>
-                </div>
+              <div key={catName} data-category={categoryKey} className="category-section scroll-mt-28 flex flex-col animate-fade-in">
+                {catName && (
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-800 dark:bg-zinc-200" />
+                    <h3 className="text-lg font-bold tracking-wider font-mono uppercase text-zinc-500 dark:text-zinc-400">
+                      {catName}
+                    </h3>
+                  </div>
+                )}
 
                 <motion.div 
                   variants={motionContainer}

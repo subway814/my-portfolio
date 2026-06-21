@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PortfolioItem, ItemType, SubPageKey } from '../types';
 import { getBilibiliEmbedUrl, getDouyinEmbedUrl, ALBUM_IMAGES } from '../data';
-import { X, Play, Pause, Volume2, Maximize, ChevronLeft, ChevronRight, Download, FileText, Layout, ArrowRight } from 'lucide-react';
+import { X, Play, Pause, Volume2, Maximize, ChevronLeft, ChevronRight, Download, FileText, Layout, ArrowRight, BookOpen } from 'lucide-react';
 
 interface ItemModalProps {
   isOpen: boolean;
@@ -16,6 +16,7 @@ interface ItemModalProps {
   onNavigate: (direction: number) => void;
   slides?: string[];
   categoryKey?: SubPageKey;
+  onNavigateCategory?: (categoryKey: SubPageKey, itemTitle: string) => void;
 }
 
 export default function ItemModal({
@@ -29,7 +30,8 @@ export default function ItemModal({
   allItems,
   onNavigate,
   slides,
-  categoryKey
+  categoryKey,
+  onNavigateCategory
 }: ItemModalProps) {
   // Video player custom controls states
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -352,6 +354,71 @@ export default function ItemModal({
               <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">Slideshow / 幻灯片浏览</span>
               <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">← → 切换 · 点击图片全屏查看</span>
             </div>
+          </div>
+        );
+      }
+
+      // 项目经历(project)：左侧大图瀑布流，右侧文字分层
+      if (categoryKey === 'project') {
+        return (
+          <div className="w-full flex flex-col items-center gap-3 animate-fade-in">
+            {/* 标题 + 说明 */}
+            <div className="w-full flex items-center justify-between px-2">
+              <div className="flex items-center gap-2">
+                <Layout size={14} className="text-zinc-600 dark:text-zinc-400" />
+                <span className="text-xs font-bold text-[#1A1A1A] dark:text-white">策划案部分内容</span>
+              </div>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">共 {images.length} 张 · 滚轮浏览 · 点击放大</span>
+            </div>
+
+            {/* 大图垂直滚动容器 */}
+            <div className="w-full max-h-[520px] overflow-y-auto overflow-x-hidden custom-scrollbar rounded-2xl border border-[#E5E5E5] dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 shadow-sm">
+              <div className="flex flex-col gap-3 p-3">
+                {images.map((img, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    onClick={() => { setLightboxIndex(index); setLightboxOpen(true); }}
+                    className="relative w-full rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 cursor-pointer group hover:border-zinc-500 dark:hover:border-zinc-600 transition-all hover:shadow-lg"
+                  >
+                    <img
+                      src={img}
+                      alt={`${title} - ${index + 1}`}
+                      className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <Maximize size={24} className="text-white drop-shadow-xl" />
+                    </div>
+
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* 滚动提示 */}
+            <div className="flex items-center gap-2 text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">
+              <span>↓</span>
+              <span>向下滚动查看更多</span>
+              <span>↓</span>
+            </div>
+
+            {/* 查看完整策划案按钮 */}
+            {onNavigateCategory && (
+              <div className="w-full mt-2">
+                <button
+                  onClick={() => onNavigateCategory('design', title)}
+                  className="w-full py-2.5 px-4 bg-zinc-900 dark:bg-zinc-100 hover:bg-black dark:hover:bg-white text-white dark:text-zinc-950 text-xs font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <BookOpen size={14} />
+                  <span>查看完整策划案</span>
+                  <ArrowRight size={12} className="text-zinc-300 dark:text-zinc-600" />
+                </button>
+                <p className="text-[9px] text-zinc-400 dark:text-zinc-500 font-mono text-center mt-2">→ 平面作品 · 完整32张 PPT</p>
+              </div>
+            )}
           </div>
         );
       }
@@ -712,9 +779,71 @@ export default function ItemModal({
             <h2 className="text-xl md:text-2xl font-bold text-[#1A1A1A] dark:text-white tracking-tight leading-tight">
               {title}
             </h2>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed space-y-2 mt-4 font-normal">
+            {categoryKey === 'project' ? (
+              <div className="max-h-[420px] overflow-y-auto custom-scrollbar space-y-4 mt-4 pr-1">
+                {/* 项目详情标签 */}
+                <div className="flex items-center gap-2 mb-2">
+                  <FileText size={12} className="text-zinc-600 dark:text-zinc-400" />
+                  <span className="text-[10px] font-mono text-zinc-450 dark:text-zinc-500 font-bold uppercase tracking-wider">项目详情 / PROJECT DETAILS</span>
+                </div>
+                {/* 分层内容 */}
+                <div className="space-y-3">
+                  {(() => {
+                    const sections: Array<{level: number; title?: string; content: string[]}> = [];
+                    const lines = (fullDesc || '').split('\n');
+                    let currentSection: typeof sections[0] | null = null;
+                    lines.forEach((line) => {
+                      const trimmed = line.trim();
+                      if (!trimmed) {
+                        if (currentSection) sections.push(currentSection);
+                        currentSection = null;
+                        return;
+                      }
+                      const mainMatch = trimmed.match(/^[一二三四五六]、(.+)/);
+                      if (mainMatch) {
+                        if (currentSection) sections.push(currentSection);
+                        currentSection = { level: 1, title: mainMatch[1], content: [] };
+                        return;
+                      }
+                      const subMatch = trimmed.match(/^(\d+)\.(.+)/);
+                      if (subMatch) {
+                        if (currentSection) currentSection.content.push(`**${subMatch[1]}. ${subMatch[2]}`);
+                        return;
+                      }
+                      if (currentSection) currentSection.content.push(trimmed.replace(/^#+\s*/, ''));
+                    });
+                    if (currentSection) sections.push(currentSection);
+                    return sections.map((section, sIdx) => (
+                      <div key={sIdx}>
+                        <h4 className="text-sm font-bold text-[#1A1A1A] dark:text-white mb-1.5 flex items-center gap-2">
+                          <span className="w-1 h-4 bg-zinc-800 dark:bg-zinc-200 rounded-full shrink-0" />
+                          {section.title}
+                        </h4>
+                        <div className="pl-3 space-y-1">
+                          {section.content.map((para, pIdx) => {
+                            if (para.startsWith('**')) {
+                              const clean = para.replace(/^\*\*/, '').replace(/\*\*/g, '');
+                              return (
+                                <p key={pIdx} className="text-xs font-semibold text-zinc-600 dark:text-zinc-300 mt-1">{clean}</p>
+                              );
+                            }
+                            return (
+                              <p key={pIdx} className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{para}</p>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ));
+                  })()}
+                </div>
+
+                {/* 查看完整策划案按钮已移至左侧图片下方 */}
+              </div>
+            ) : (
+              <div className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed space-y-2 mt-4 font-normal">
               <p>{fullDesc}</p>
             </div>
+            )}
             {type === 'video' && allItems[currentIndex]?.tags && allItems[currentIndex].tags.length > 0 && (
               <div className="mt-4">
                 <span className="text-[10px] font-mono text-zinc-450 dark:text-zinc-500 font-bold uppercase tracking-wider">职责 / ROLE</span>
