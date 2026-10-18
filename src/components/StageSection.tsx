@@ -15,7 +15,7 @@ const FALLBACK = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?a
 
 // 透明毛玻璃卡片（深色）
 const GLASS_CARD =
-  'group border border-white/10 rounded-xl overflow-hidden cursor-pointer bg-white/[0.06] backdrop-blur-md transition-all duration-500 hover:border-white/40 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)]';
+  'group border border-white/10 rounded-xl overflow-hidden cursor-pointer bg-white/[0.08] transition-all duration-500 hover:border-white/40 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)]';
 
 /**
  * 章节（普通流式布局，非全屏）：
@@ -178,7 +178,7 @@ function RevealCard({ item, i, categoryKey, flatItems, onOpenModal, onImageError
               loading="lazy"
               className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
             />
-            <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <div className="absolute top-4 right-4 p-2 bg-black/60 rounded-full border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               {item.type === 'video' && <Play size={10} className="fill-white" />}
               {item.type === 'image' && <Camera size={10} />}
               {item.type === 'web' && <Globe size={10} />}

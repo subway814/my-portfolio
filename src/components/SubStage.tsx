@@ -176,18 +176,18 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
 
                 {/* 个人信息 */}
                 <div className="grid grid-cols-2 gap-3 mt-2">
-                  <div className="p-4 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+                  <div className="p-4 bg-white/[0.08] border border-white/10 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
                     <h4 className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase font-bold">年龄 / AGE</h4>
                     <p className="text-sm font-semibold text-[#1A1A1A] dark:text-zinc-200 mt-1">20岁</p>
                   </div>
-                  <div className="p-4 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+                  <div className="p-4 bg-white/[0.08] border border-white/10 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
                     <h4 className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase font-bold">院校 / SCHOOL</h4>
                     <p className="text-sm font-semibold text-[#1A1A1A] dark:text-zinc-200 mt-1">湖北大学</p>
                   </div>
                 </div>
 
                 {/* 教育背景 */}
-                <div className="p-6 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                <div className="p-6 bg-white/[0.08] border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">教育背景 / EDUCATION</h4>
                     <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">2023.09 — 至今</span>
@@ -199,7 +199,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                 </div>
 
                 {/* 个人优势 */}
-                <div className="p-6 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                <div className="p-6 bg-white/[0.08] border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                   <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm mb-3">个人优势 / PERSONAL STRENGTHS</h4>
                   <ul className="space-y-3 text-xs text-zinc-600 dark:text-zinc-400">
                     <li className="leading-relaxed">
@@ -225,7 +225,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                     校园经历 / CAMPUS EXPERIENCE
                   </h3>
                   <div className="space-y-3">
-                    <div className="p-5 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                    <div className="p-5 bg-white/[0.08] border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">湖北大学记者团</h4>
@@ -240,7 +240,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                       </ul>
                     </div>
 
-                    <div className="p-5 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                    <div className="p-5 bg-white/[0.08] border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">课程实践 — 青漾湖北文旅策划</h4>
@@ -253,7 +253,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                       </ul>
                     </div>
 
-                    <div className="p-5 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                    <div className="p-5 bg-white/[0.08] border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">课程实践 — 《怪物》音乐剧策划</h4>
@@ -305,7 +305,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                     { icon: <Mail className="text-zinc-800 dark:text-zinc-200" size={18} />, label: "邮箱 / EMAIL", val: "2979762419@qq.com" },
                     { icon: <MessageCircle className="text-zinc-800 dark:text-zinc-200" size={18} />, label: "微信 / WECHAT", val: "15927613421" }
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-4 p-4 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.01)]">
+                    <div key={index} className="flex items-center gap-4 p-4 bg-white/[0.08] border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.01)]">
                       <div className="p-2.5 rounded-lg bg-white/10 border border-white/15 text-zinc-800 dark:text-zinc-200">{item.icon}</div>
                       <div>
                         <div className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase font-bold">{item.label}</div>
@@ -352,12 +352,12 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                         key={`${item.title}-${idx}`}
                         variants={motionCard}
                         onClick={() => onOpenModal(item.type, item.src, item.title, item.fullDesc || '', flatIdx, flatItems, item.slides, categoryKey)}
-                        className={`portfolio-card group border border-white/10 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-white/40 hover:shadow-[0_12px_30px_rgba(0,0,0,0.5)] ${isLinkCard ? 'bg-white/[0.04] backdrop-blur-md' : 'bg-white/[0.06] backdrop-blur-md'}`}
+                        className={`portfolio-card group border border-white/10 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-white/40 hover:shadow-[0_12px_30px_rgba(0,0,0,0.5)] ${isLinkCard ? 'bg-white/[0.04] backdrop-blur-md' : 'bg-white/[0.08]'}`}
                       >
                         {isLinkCard ? (
                           <div className="p-5 md:p-6 flex flex-col gap-3">
                             <div className="flex items-center justify-between">
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/10 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                                 {item.platform || 'LINK'}
                               </span>
                               <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 font-semibold">
@@ -385,7 +385,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                                 alt={item.title}
                                 className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.01] transition-all duration-700 ease-out"
                               />
-                              <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/20 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                              <div className="absolute top-4 right-4 p-2 bg-black/60 rounded-full border border-white/20 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                 {item.type === 'video' && <Play size={10} className="text-zinc-800 dark:text-zinc-200 fill-zinc-800 dark:fill-zinc-200" />}
                                 {item.type === 'image' && <Camera size={10} className="text-zinc-800 dark:text-zinc-200" />}
                                 {item.type === 'web' && <Globe size={10} className="text-zinc-800 dark:text-zinc-200" />}
@@ -437,12 +437,12 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                   key={`${item.title}-${idx}`}
                   variants={motionCard}
                   onClick={() => onOpenModal(item.type, item.src, item.title, item.fullDesc || '', idx, flatItems, item.slides, categoryKey)}
-                  className={`portfolio-card category-section scroll-mt-28 group border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] transition-all duration-500 hover:border-[#1A1A1A] dark:hover:border-zinc-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_12px_30px_rgba(255,255,255,0.02)] ${isLinkCard ? 'bg-white/[0.04] backdrop-blur-md' : 'bg-white/[0.06] backdrop-blur-md'}`}
+                  className={`portfolio-card category-section scroll-mt-28 group border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] transition-all duration-500 hover:border-[#1A1A1A] dark:hover:border-zinc-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_12px_30px_rgba(255,255,255,0.02)] ${isLinkCard ? 'bg-white/[0.04] backdrop-blur-md' : 'bg-white/[0.08]'}`}
                 >
                   {isLinkCard ? (
                     <div className="p-5 md:p-6 flex flex-col gap-3">
                       <div className="flex items-center justify-between">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/10 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                           {item.platform || 'LINK'}
                         </span>
                         <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 font-semibold">
@@ -470,7 +470,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                           alt={item.title}
                           className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.01] transition-all duration-700 ease-out"
                         />
-                        <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/20 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <div className="absolute top-4 right-4 p-2 bg-black/60 rounded-full border border-white/20 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                           {item.type === 'video' && <Play size={10} className="text-zinc-800 dark:text-zinc-200 fill-zinc-800 dark:fill-zinc-200" />}
                           {item.type === 'image' && <Camera size={10} className="text-zinc-800 dark:text-zinc-200" />}
                           {item.type === 'web' && <Globe size={10} className="text-zinc-800 dark:text-zinc-200" />}

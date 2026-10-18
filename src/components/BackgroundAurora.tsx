@@ -26,7 +26,7 @@ export default function BackgroundAurora() {
     let stars: Star[] = [];
 
     const makeStars = () => {
-      const count = Math.floor((w * h) / 3200);
+      const count = Math.floor((w * h) / 5200);
       stars = Array.from({ length: count }, () => {
         const r = Math.random();
         const size = r < 0.04 ? 3 : r < 0.16 ? 2 : 1; // 3px 极少、2px 少量、1px 为主
@@ -36,7 +36,7 @@ export default function BackgroundAurora() {
           v: 12 + Math.random() * 40, // px/s 上移速度（缓慢漂移）
           size,
           alpha: 0.4 + Math.random() * 0.6,
-          tw: Math.random() < 0.22, // 约 22% 星点闪烁
+          tw: Math.random() < 0.08, // 约 8% 星点闪烁（性能优化：减少逐帧透明度计算）
           phase: Math.random() * Math.PI * 2
         };
       });

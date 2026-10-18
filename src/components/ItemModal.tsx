@@ -160,8 +160,8 @@ export default function ItemModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onNavigate, onClose, lightboxOpen]);
 
-  // If closed, return nothing
-  if (!isOpen) return null;
+  // If closed, the outer AnimatePresence wrapper drives the exit animation,
+  // so we keep rendering content until that animation finishes.
 
   // Render correct body depending on type
   const renderItemMedia = () => {
@@ -305,24 +305,24 @@ export default function ItemModal({
               {images.length > 1 && (
                 <button
                   onClick={handleAlbumPrev}
-                  className="p-2.5 md:p-3 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors shadow-sm cursor-pointer shrink-0"
+                  className="p-2.5 md:p-3 rounded-full bg-white/[0.08] border border-white/10 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors shadow-sm cursor-pointer shrink-0"
                 >
                   <ChevronLeft size={22} />
                 </button>
               )}
-              <div className="flex-1 relative rounded-xl overflow-hidden bg-white/[0.05] backdrop-blur-md border border-white/10 shadow-sm flex items-center justify-center group">
+              <div className="flex-1 relative rounded-xl overflow-hidden bg-white/[0.07] border border-white/10 shadow-sm flex items-center justify-center group">
                 <img
                   src={images[albumIndex]}
                   alt={`${title} - ${albumIndex + 1}`}
                   onClick={() => { setLightboxIndex(albumIndex); setLightboxOpen(true); }}
                   className="max-h-[560px] w-auto h-auto object-contain cursor-zoom-in hover:scale-[1.01] transition-transform duration-500"
                 />
-                <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-zinc-600 dark:text-zinc-400 text-[10px] font-mono font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none shadow-sm">
+                <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/15 text-zinc-600 dark:text-zinc-400 text-[10px] font-mono font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none shadow-sm">
                   <Maximize size={10} />
                   <span>点击放大全屏浏览</span>
                 </div>
                 {images.length > 1 && (
-                  <div className="absolute bottom-4 right-4 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-zinc-600 dark:text-zinc-400 text-[10px] font-mono font-semibold shadow-sm">
+                  <div className="absolute bottom-4 right-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/15 text-zinc-600 dark:text-zinc-400 text-[10px] font-mono font-semibold shadow-sm">
                     {albumIndex + 1} / {images.length}
                   </div>
                 )}
@@ -330,7 +330,7 @@ export default function ItemModal({
               {images.length > 1 && (
                 <button
                   onClick={handleAlbumNext}
-                  className="p-2.5 md:p-3 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors shadow-sm cursor-pointer shrink-0"
+                  className="p-2.5 md:p-3 rounded-full bg-white/[0.08] border border-white/10 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors shadow-sm cursor-pointer shrink-0"
                 >
                   <ChevronRight size={22} />
                 </button>
@@ -410,7 +410,7 @@ export default function ItemModal({
               <div className="w-full mt-2">
                 <button
                   onClick={() => onNavigateCategory('design', title)}
-                  className="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-xl text-xs font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2"
                 >
                   <BookOpen size={14} />
                   <span>查看完整策划案</span>
@@ -426,7 +426,7 @@ export default function ItemModal({
       // 摄影作品(photo)：网格平铺展示
       return (
         <div className="flex flex-col gap-6 w-full animate-fade-in">
-          <div className="bg-white/[0.06] backdrop-blur-md border border-white/10 p-5 rounded-xl shadow-sm">
+          <div className="bg-white/[0.08] border border-white/10 p-5 rounded-xl shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <Layout size={16} className="text-zinc-800 dark:text-zinc-200" />
               <div>
@@ -471,7 +471,7 @@ export default function ItemModal({
 
       return (
         <div className="flex flex-col gap-4 w-full">
-          <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-white/[0.05] backdrop-blur-md border border-white/10 shadow-sm flex items-center justify-center">
+          <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-white/[0.07] border border-white/10 shadow-sm flex items-center justify-center">
             {/* Real office embed */}
             <iframe
               src={officeViewer}
@@ -497,7 +497,7 @@ export default function ItemModal({
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); alert("策划案正在下载中...\n(Simulated file acquisition)"); }}
-              className="flex items-center gap-1.5 px-5 py-2.5 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-xl rounded-lg transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-5 py-2.5 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg transition-colors shadow-sm"
             >
               <Download size={12} />
               <span>下载 PPTX 完整原档</span>
@@ -528,7 +528,7 @@ export default function ItemModal({
     if (type === 'html') {
       if (src === 'html_media_1') {
         return (
-          <div className="w-full bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 text-zinc-650 dark:text-zinc-300 shadow-[0_1px_3px_rgba(0,0,0,0.01)] text-left animate-fade-in">
+          <div className="w-full bg-white/[0.08] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 text-zinc-650 dark:text-zinc-300 shadow-[0_1px_3px_rgba(0,0,0,0.01)] text-left animate-fade-in">
             <div className="border-b border-[#E5E5E5] dark:border-zinc-800 pb-4">
               <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-widest font-bold">Campaign Operations Audit / 战役复盘</span>
               <h3 className="text-2xl font-bold text-[#1A1A1A] dark:text-white mt-1">数码桌搭爆款冷启动 · 拆机报告</h3>
@@ -541,7 +541,7 @@ export default function ItemModal({
                 { label: "精准引流商域", val: "15.4%", unit: "Conv Rate" },
                 { label: "爆款复盘产出", val: "100W+", unit: "Impressions" }
               ].map((m, i) => (
-                <div key={i} className="p-4 bg-white/[0.05] backdrop-blur-md border border-white/10 rounded-xl text-left">
+                <div key={i} className="p-4 bg-white/[0.07] border border-white/10 rounded-xl text-left">
                   <div className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono tracking-wider font-semibold">{m.label}</div>
                   <div className="text-xl md:text-2xl font-extrabold text-[#1A1A1A] dark:text-white mt-1">{m.val}</div>
                   <div className="text-[9px] text-zinc-500 dark:text-zinc-400 font-mono mt-0.5 font-bold">{m.unit}</div>
@@ -563,7 +563,7 @@ export default function ItemModal({
 
       if (src === 'html_project_1') {
         return (
-          <div className="w-full bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 text-zinc-650 dark:text-zinc-300 shadow-[0_1px_3px_rgba(0,0,0,0.01)] text-left animate-fade-in">
+          <div className="w-full bg-white/[0.08] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 text-zinc-650 dark:text-zinc-300 shadow-[0_1px_3px_rgba(0,0,0,0.01)] text-left animate-fade-in">
             <div className="border-b border-[#E5E5E5] dark:border-zinc-800 pb-4">
               <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-widest font-bold">ByteDance Internship Journey / 字节运营实践</span>
               <h3 className="text-2xl font-bold text-[#1A1A1A] dark:text-white mt-1">大厂视觉与内容运营实践项目</h3>
@@ -578,7 +578,7 @@ export default function ItemModal({
                 </div>
               </div>
 
-              <div className="p-5 bg-white/[0.05] backdrop-blur-md border border-white/10 rounded-xl space-y-3 text-left">
+              <div className="p-5 bg-white/[0.07] border border-white/10 rounded-xl space-y-3 text-left">
                 <h4 className="text-xs font-mono text-zinc-400 dark:text-zinc-500 uppercase font-bold">Tracked Metrics / 沉淀产出</h4>
                 <div className="space-y-2">
                   <div className="flex justify-between items-baseline border-b border-[#E5E5E5] dark:border-zinc-800 pb-1.5">
@@ -604,7 +604,7 @@ export default function ItemModal({
     if (type === 'image') {
       return (
         <div className="flex flex-col gap-4 w-full animate-fade-in justify-center items-center">
-          <div className="relative aspect-auto max-h-[600px] w-full rounded-xl overflow-hidden bg-white/[0.05] backdrop-blur-md border border-white/10 shadow-sm flex items-center justify-center group">
+          <div className="relative aspect-auto max-h-[600px] w-full rounded-xl overflow-hidden bg-white/[0.07] border border-white/10 shadow-sm flex items-center justify-center group">
             <img
               src={src}
               alt={title}
@@ -612,7 +612,7 @@ export default function ItemModal({
               referrerPolicy="no-referrer"
               className="max-h-[580px] w-auto h-auto object-contain rounded-lg shadow-sm cursor-zoom-in hover:scale-[1.01] transition-transform duration-500"
             />
-            <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-zinc-600 dark:text-zinc-400 text-[10px] font-mono font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none shadow-sm">
+            <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/15 text-zinc-600 dark:text-zinc-400 text-[10px] font-mono font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none shadow-sm">
               <Maximize size={10} />
               <span>点击图片放大浏览</span>
             </div>
@@ -640,7 +640,7 @@ export default function ItemModal({
               href={src}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-xl rounded-full transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full transition-colors cursor-pointer"
             >
               <span>在新标签页中独立打开网页</span>
               <ArrowRight size={12} />
@@ -710,7 +710,7 @@ export default function ItemModal({
               href={src}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-xl rounded-full transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full transition-colors cursor-pointer"
             >
               <span>在新标签页中独立打开</span>
               <ArrowRight size={12} />
@@ -724,19 +724,19 @@ export default function ItemModal({
   };
 
   return (
-    <div className="fixed inset-0 w-full h-full bg-[#090a0f]/70 backdrop-blur-xl border border-white/10 z-100 flex justify-center items-center p-6 md:p-12 overflow-y-auto transition-colors duration-500">
+    <div className="fixed inset-0 w-full h-full bg-[#0A0A0C]/70 backdrop-blur-2xl border border-white/10 z-100 flex justify-center items-center p-6 md:p-12 overflow-y-auto transition-colors duration-500">
       
       {/* Immersive Modal Close Button */}
       <button
         onClick={onClose}
-        className="absolute top-8 right-8 p-3 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-all shadow-sm z-110 cursor-pointer hover:scale-105"
+        className="absolute top-8 right-8 p-3 rounded-full bg-white/[0.08] border border-white/10 text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-all shadow-sm z-110 cursor-pointer hover:scale-105"
       >
         <X size={18} />
       </button>
 
       {/* Floating Bottom Navigator dots */}
       {allItems.length > 1 && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 bg-white/[0.06] backdrop-blur-md border border-white/10 px-6 py-3 rounded-full shadow-sm backdrop-blur-md z-110">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 bg-white/[0.08] border border-white/10 px-6 py-3 rounded-full shadow-sm z-110">
           <button
             onClick={() => onNavigate(-1)}
             className="text-zinc-400 hover:text-black dark:text-zinc-500 dark:hover:text-white transition-colors cursor-pointer"
@@ -911,7 +911,7 @@ export default function ItemModal({
                   href={src}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-xl text-sm font-bold shadow-sm transition-colors cursor-pointer"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-bold shadow-sm transition-colors cursor-pointer"
                 >
                   <span>在小红书网页版中打开</span>
                   <ArrowRight size={14} />
@@ -957,7 +957,7 @@ export default function ItemModal({
               {hasMultiple && (
                 <button
                   onClick={handlePrev}
-                  className="absolute left-4 md:left-8 z-10 p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors cursor-pointer backdrop-blur-md shadow-lg"
+                  className="absolute left-4 md:left-8 z-10 p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors cursor-pointer shadow-lg"
                 >
                   <ChevronLeft size={24} />
                 </button>
@@ -982,7 +982,7 @@ export default function ItemModal({
               {hasMultiple && (
                 <button
                   onClick={handleNext}
-                  className="absolute right-4 md:right-8 z-10 p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors cursor-pointer backdrop-blur-md shadow-lg"
+                  className="absolute right-4 md:right-8 z-10 p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors cursor-pointer shadow-lg"
                 >
                   <ChevronRight size={24} />
                 </button>

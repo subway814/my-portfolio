@@ -156,20 +156,20 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#090a0f] text-white selection:bg-white selection:text-zinc-950 overflow-x-hidden antialiased font-sans transition-colors duration-500">
-      {/* 入场黑色帷幕：自下而上展开 */}
+      {/* 入场黑色帷幕：淡出进入主页 */}
       <AnimatePresence>
         {!introDone && (
           <motion.div
-            initial={{ clipPath: 'inset(0 0 0% 0)' }}
-            animate={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.95, delay: 0.45, ease: [0.76, 0, 0.24, 1] }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
             onAnimationComplete={() => setIntroDone(true)}
             className="fixed inset-0 z-[120] bg-[#0A0A0A] pointer-events-none flex items-center justify-center"
           >
             <motion.span
               initial={{ opacity: 1 }}
               animate={{ opacity: 0 }}
-              transition={{ duration: 0.4, delay: 0.25 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
               className="font-mono text-[10px] tracking-[0.5em] uppercase text-white/70"
             >
               SUBWAY — Portfolio
@@ -331,9 +331,10 @@ export default function App() {
       <AnimatePresence>
         {modalState.isOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, scale: 0.96, y: 14 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.97, y: 8 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-100"
           >
             <ItemModal
