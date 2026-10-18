@@ -25,4 +25,4 @@ export interface CategoryData {
   items?: PortfolioItem[];
 }
 
-export type SubPageKey = 'video' | 'design' | 'photo' | 'media' | 'contact' | 'project';
+export type SubPageKey = 'video' | 'course' | 'design' | 'photo' | 'media' | 'contact' | 'project';

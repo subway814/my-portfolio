@@ -20,7 +20,7 @@ export interface StageData {
 
 export const STAGES: Record<SubPageKey, StageData> = {
   "video": {
-    "num": "01",
+    "num": "04",
     "title": "视频作品",
     "subtitle": "VIDEO",
     "desc": "原创纪录片、影像实验与新媒体短视频分类展示",
@@ -212,7 +212,7 @@ export const STAGES: Record<SubPageKey, StageData> = {
     }
   },
   "project": {
-    "num": "02",
+    "num": "01",
     "title": "项目经历",
     "subtitle": "PROJECT",
     "desc": "实战项目全流程记录与核心贡献展示",
@@ -259,11 +259,11 @@ export const STAGES: Record<SubPageKey, StageData> = {
       ]
     }
   },
-  "design": {
-    "num": "03",
-    "title": "平面作品",
-    "subtitle": "GRAPHIC",
-    "desc": "高分策划案、跨界营销全案与纸张网格装帧美学分类展示",
+  "course": {
+    "num": "02",
+    "title": "课程作品",
+    "subtitle": "COURSE",
+    "desc": "课程实践高分成果：营销策划案、市场调研、数据分析与传播方案分类展示",
     "categories": {
       "课业成果": [
         {
@@ -620,7 +620,15 @@ export const STAGES: Record<SubPageKey, StageData> = {
             "docs/春节申遗成功-跨文化传播/幻灯片22.jpg"
           ]
         }
-      ],
+      ]
+    }
+  },
+  "design": {
+    "num": "05",
+    "title": "平面作品",
+    "subtitle": "GRAPHIC",
+    "desc": "纸张网格装帧美学与跨界营销全案分类展示",
+    "categories": {
       "平面设计": [
         {
           "title": "专辑装帧设计",
@@ -673,7 +681,7 @@ export const STAGES: Record<SubPageKey, StageData> = {
     }
   },
   "photo": {
-    "num": "04",
+    "num": "06",
     "title": "摄影作品",
     "subtitle": "PHOTOGRAPHY",
     "desc": "人像、静物、风景与现场摄影作品集",
@@ -888,7 +896,7 @@ export const STAGES: Record<SubPageKey, StageData> = {
     }
   },
   "media": {
-    "num": "05",
+    "num": "03",
     "title": "新媒体作品",
     "subtitle": "HIGHLIGHTS",
     "desc": "高流量内容拆解、网格排版及核心数据复盘与 H5 互动探索",
@@ -988,10 +996,10 @@ export const STAGES: Record<SubPageKey, StageData> = {
     }
   },
   "contact": {
-    "num": "06",
-    "title": "取得联系",
-    "subtitle": "CONNECT",
-    "desc": "个人优势、设计哲学、精通全链路技能工具以及中英双语简历下载",
+    "num": "00",
+    "title": "个人介绍",
+    "subtitle": "ABOUT",
+    "desc": "个人优势、教育背景、校园经历与联系方式",
     "items": [
       {
         "title": "取得联系",

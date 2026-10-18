@@ -1,72 +1,100 @@
-import { motion } from 'motion/react';
+import { useEffect, useRef } from 'react';
 
+/**
+ * 星空背景（依据用户上传的 uiverse.io starfield 提示词实现）：
+ * - 底部径向渐变：radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)
+ * - 三层星点：1px 为主 / 少量 2px / 极少数 3px，白色点缓慢向上漂移（对应 50s/100s/150s 一圈）
+ * - 部分星点轻微闪烁，营造深邃星空
+ * - 响应式：星点按视口大小自适应生成；尊重 prefers-reduced-motion
+ */
 export default function BackgroundAurora() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let raf = 0;
+    let w = 0;
+    let h = 0;
+
+    type Star = { x: number; y: number; v: number; size: number; alpha: number; tw: boolean; phase: number };
+    let stars: Star[] = [];
+
+    const makeStars = () => {
+      const count = Math.floor((w * h) / 3200);
+      stars = Array.from({ length: count }, () => {
+        const r = Math.random();
+        const size = r < 0.04 ? 3 : r < 0.16 ? 2 : 1; // 3px 极少、2px 少量、1px 为主
+        return {
+          x: Math.random() * w,
+          y: Math.random() * (h + 1600) - 800,
+          v: 12 + Math.random() * 40, // px/s 上移速度（缓慢漂移）
+          size,
+          alpha: 0.4 + Math.random() * 0.6,
+          tw: Math.random() < 0.22, // 约 22% 星点闪烁
+          phase: Math.random() * Math.PI * 2
+        };
+      });
+    };
+
+    const resize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      makeStars();
+    };
+
+    let last = performance.now();
+    const draw = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      ctx.clearRect(0, 0, w, h);
+      const t = now / 1000;
+
+      for (const s of stars) {
+        s.y -= s.v * dt;
+        if (s.y < -12) {
+          s.y = h + 12;
+          s.x = Math.random() * w;
+        }
+        let a = s.alpha;
+        if (s.tw) a *= 0.55 + 0.45 * Math.sin(t * 2 + s.phase);
+        ctx.globalAlpha = a;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(Math.round(s.x), Math.round(s.y), s.size, s.size);
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const loop = (now: number) => {
+      draw(now);
+      if (!reduced) raf = requestAnimationFrame(loop);
+    };
+
+    resize();
+    raf = requestAnimationFrame(loop);
+    window.addEventListener('resize', resize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#FAFAFA] dark:bg-[#0A0A0C] transition-colors duration-500">
-      {/* Aurora Mesh Gradient Blends (Lightened, airy, warm minimalist shades in light, and deep cosmic elements in dark) */}
-      <motion.div
-        animate={{
-          scale: [1, 1.15, 0.95, 1],
-          x: [0, 50, -40, 0],
-          y: [0, -60, 30, 0],
-          opacity: [0.6, 0.75, 0.6, 0.6]
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute -top-[20%] -left-[10%] w-[60%] h-[70%] rounded-full bg-gradient-to-br from-[#E0F2FE]/40 via-[#FAE8FF]/30 to-transparent dark:from-[#3B82F6]/10 dark:via-[#D946EF]/5 dark:to-transparent blur-[120px]"
-      />
-      <motion.div
-        animate={{
-          scale: [1.1, 0.9, 1.15, 1.1],
-          x: [0, -30, 60, 0],
-          y: [0, 40, -50, 0],
-          opacity: [0.5, 0.7, 0.5, 0.5]
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute -bottom-[20%] -right-[10%] w-[70%] h-[80%] rounded-full bg-gradient-to-tr from-[#FEF3C7]/30 via-[#ECFDF5]/20 to-transparent dark:from-[#F59E0B]/5 dark:via-[#10B981]/5 dark:to-transparent blur-[140px]"
-      />
-      <motion.div
-        animate={{
-          scale: [0.95, 1.1, 0.9, 0.95],
-          x: [-40, 20, -10, -40],
-          y: [30, -30, 40, 30],
-          opacity: [0.3, 0.45, 0.3, 0.3]
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute top-[40%] left-[30%] w-[45%] h-[50%] rounded-full bg-gradient-to-r from-[#DBEAFE]/30 via-[#E0F2FE]/15 to-transparent dark:from-[#60A5FA]/5 dark:via-transparent blur-[100px]"
-      />
-
-      {/* Grid Pattern Overlay (Minimal Day Grid) */}
-      <div 
-        className="absolute inset-0 bg-repeat opacity-[0.03] dark:hidden"
-        style={{
-          backgroundImage: `radial-gradient(#1a1a1a 1px, transparent 1px)`,
-          backgroundSize: '24px 24px'
-        }}
-      />
-      
-      {/* Grid Pattern Overlay (Minimal Night Grid) */}
-      <div 
-        className="absolute inset-0 bg-repeat hidden dark:block opacity-[0.04]"
-        style={{
-          backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
-          backgroundSize: '24px 24px'
-        }}
-      />
-
-      {/* Ambient subtle vignette */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAFA] via-transparent to-[#FAFAFA]/45 dark:from-[#0A0A0C] dark:via-transparent dark:to-[#0A0A0C]/50" />
+    <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* 底部径向渐变：深空蓝 → 黑 */}
+      <div className="bg-starfield absolute inset-0" />
+      {/* 三层星点 canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0" />
     </div>
   );
 }

@@ -1,73 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 @import "tailwindcss";
 
+/* class 方式启用 dark 主题（html.dark） */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-ink: #0A0A0A;
+  --color-paper: #FAFAF8;
 }
 
-/* Fine-tune global body and scrollbars */
+/* ── Base（黑色为主，白色字体）────────────────────── */
 html, body {
-  background-color: #FAFAFA;
-  color: #1A1A1A;
+  background-color: #090a0f;
+  color: #E4E4E7;
   scroll-behavior: smooth;
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-html.dark, html.dark body {
-  background-color: #0A0A0C;
-  color: #F4F4F6;
+html {
+  scroll-padding-top: 5.5rem;
 }
 
+::selection {
+  background: #FFFFFF;
+  color: #0A0A0A;
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(26, 26, 26, 0.1) transparent;
-  transition: border-color 0.3s ease, background-color 0.1s ease-out;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
 }
 
-html.dark * {
-  scrollbar-color: rgba(244, 244, 246, 0.1) transparent;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(26, 26, 26, 0.15);
+  background: rgba(255, 255, 255, 0.14);
   border-radius: 99px;
 }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.35); }
 
-html.dark ::-webkit-scrollbar-thumb {
-  background: rgba(244, 244, 246, 0.15);
+/* ── Typography utilities（深色下为白色描边）──────── */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.55);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(26, 26, 26, 0.35);
+.text-outline-strong {
+  color: transparent;
+  -webkit-text-stroke: 2.5px rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
 }
 
-html.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(244, 244, 246, 0.35);
+.text-outline-light {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.32);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.07);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
+/* ── Starfield background（uiverse starfield 提示词）─ */
+.bg-starfield {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+/* ── Texture: film grain ──────────────────────────── */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Motion keyframes ─────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marqueeX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+.anim-fade-up {
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-marquee {
+  animation: marqueeX 28s linear infinite;
+}
+
+.anim-spin-slow {
+  animation: spinSlow 26s linear infinite;
+}
+
+/* ── Hairline divider ─────────────────────────────── */
+.hairline {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Reduced motion ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
-
-.animate-fade-in {
-  animation: fadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-

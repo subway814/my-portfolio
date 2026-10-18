@@ -117,41 +117,45 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#FAFAFA]/98 dark:bg-[#0A0A0C]/98 text-[#1A1A1A] dark:text-[#E4E4E7] px-6 md:px-24 py-36 z-20 flex flex-col justify-start select-none transition-colors duration-500">
+    <div className="relative min-h-screen w-full bg-[#090a0f]/60 backdrop-blur-sm text-white px-6 md:px-24 py-36 z-20 flex flex-col justify-start select-none transition-colors duration-500">
       
       {/* Absolute Back Route */}
       <div className="fixed top-24 left-6 md:left-20 z-40 pointer-events-none">
         <button
           onClick={onBack}
-          className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full border border-[#E5E5E5]/70 dark:border-zinc-800/70 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl text-xs text-zinc-700 dark:text-zinc-300 shadow-sm hover:text-black dark:hover:text-white hover:bg-white/80 dark:hover:bg-zinc-800/80 transition-all duration-300 cursor-pointer"
+          className="pointer-events-auto group flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.35)] hover:bg-white/20 transition-all duration-300 cursor-pointer"
         >
-          <ArrowLeft size={14} />
-          <span>返回主页</span>
+          <ArrowLeft size={14} className="transition-transform duration-300 group-hover:-translate-x-1" />
+          <span className="font-mono tracking-[0.2em] uppercase text-[10px]">返回主页 / Back</span>
         </button>
       </div>
 
       {/* Chapter Large Header */}
-      <div className="mb-20 max-w-4xl mx-auto border-l-[3px] border-[#1A1A1A] dark:border-white pl-6 md:pl-10">
+      <div className="mb-20 max-w-4xl mx-auto w-full">
+        <div className="hairline w-full mb-10 flex items-center justify-between font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase text-zinc-400">
+          <span className="bg-transparent pr-4">Chapter {stageData.num}</span>
+          <span className="bg-transparent pl-4 hidden md:inline">{stageData.subtitle}</span>
+        </div>
         <motion.span 
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          className="font-mono text-zinc-500 text-xs md:text-sm tracking-widest uppercase"
+          className="font-mono text-zinc-400 text-[10px] md:text-xs tracking-[0.3em] uppercase"
         >
-          CHAPTER {stageData.num} / {stageData.subtitle}
+          {stageData.subtitle} / {stageData.num}
         </motion.span>
         <motion.h2 
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl md:text-6xl font-bold tracking-tight text-[#1A1A1A] dark:text-white mt-2"
+          transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-4xl md:text-7xl font-bold tracking-tight text-[#0A0A0A] dark:text-white mt-2"
         >
           {stageData.title}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-sm md:text-md text-zinc-500 mt-3 font-mono"
+          transition={{ delay: 0.22 }}
+          className="text-sm md:text-base text-zinc-500 mt-4"
         >
           {stageData.desc}
         </motion.p>
@@ -172,18 +176,18 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
 
                 {/* 个人信息 */}
                 <div className="grid grid-cols-2 gap-3 mt-2">
-                  <div className="p-4 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+                  <div className="p-4 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
                     <h4 className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase font-bold">年龄 / AGE</h4>
                     <p className="text-sm font-semibold text-[#1A1A1A] dark:text-zinc-200 mt-1">20岁</p>
                   </div>
-                  <div className="p-4 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+                  <div className="p-4 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
                     <h4 className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase font-bold">院校 / SCHOOL</h4>
                     <p className="text-sm font-semibold text-[#1A1A1A] dark:text-zinc-200 mt-1">湖北大学</p>
                   </div>
                 </div>
 
                 {/* 教育背景 */}
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                <div className="p-6 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">教育背景 / EDUCATION</h4>
                     <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">2023.09 — 至今</span>
@@ -195,7 +199,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                 </div>
 
                 {/* 个人优势 */}
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                <div className="p-6 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                   <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm mb-3">个人优势 / PERSONAL STRENGTHS</h4>
                   <ul className="space-y-3 text-xs text-zinc-600 dark:text-zinc-400">
                     <li className="leading-relaxed">
@@ -221,7 +225,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                     校园经历 / CAMPUS EXPERIENCE
                   </h3>
                   <div className="space-y-3">
-                    <div className="p-5 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                    <div className="p-5 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">湖北大学记者团</h4>
@@ -236,7 +240,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                       </ul>
                     </div>
 
-                    <div className="p-5 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                    <div className="p-5 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">课程实践 — 青漾湖北文旅策划</h4>
@@ -249,7 +253,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                       </ul>
                     </div>
 
-                    <div className="p-5 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                    <div className="p-5 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h4 className="text-[#1A1A1A] dark:text-zinc-100 font-bold text-sm">课程实践 — 《怪物》音乐剧策划</h4>
@@ -266,7 +270,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                 </div>
 
                 {/* 荣誉情况 */}
-                <div className="border-t border-[#E5E5E5] dark:border-zinc-800 pt-6">
+                <div className="border-t border-white/10 pt-6">
                   <h4 className="text-zinc-400 dark:text-zinc-500 font-mono text-xs uppercase font-semibold mb-3">荣誉情况 / HONORS & AWARDS</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-xs text-zinc-600 dark:text-zinc-400">
@@ -301,8 +305,8 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                     { icon: <Mail className="text-zinc-800 dark:text-zinc-200" size={18} />, label: "邮箱 / EMAIL", val: "2979762419@qq.com" },
                     { icon: <MessageCircle className="text-zinc-800 dark:text-zinc-200" size={18} />, label: "微信 / WECHAT", val: "15927613421" }
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.01)]">
-                      <div className="p-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-[#E5E5E5] dark:border-zinc-800 text-zinc-800 dark:text-zinc-200">{item.icon}</div>
+                    <div key={index} className="flex items-center gap-4 p-4 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.01)]">
+                      <div className="p-2.5 rounded-lg bg-white/10 border border-white/15 text-zinc-800 dark:text-zinc-200">{item.icon}</div>
                       <div>
                         <div className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase font-bold">{item.label}</div>
                         <div className="text-sm font-semibold text-[#1A1A1A] dark:text-zinc-200 mt-0.5">{item.val}</div>
@@ -321,11 +325,15 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
             {Object.entries(stageData.categories).map(([catName, list]) => (
               <div key={catName} data-category={categoryKey} className="category-section scroll-mt-28 flex flex-col animate-fade-in">
                 {catName && (
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-800 dark:bg-zinc-200" />
-                    <h3 className="text-lg font-bold tracking-wider font-mono uppercase text-zinc-500 dark:text-zinc-400">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-zinc-400 shrink-0">
+                      0{Object.keys(stageData.categories || {}).indexOf(catName) + 1}
+                    </span>
+                    <span className="hairline w-8 shrink-0" />
+                    <h3 className="text-sm font-semibold tracking-[0.2em] font-mono uppercase text-zinc-500 dark:text-zinc-400">
                       {catName}
                     </h3>
+                    <span className="hairline flex-1" />
                   </div>
                 )}
 
@@ -336,20 +344,20 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                   viewport={{ once: true, margin: "-100px" }}
                   className={categoryKey === 'photo' ? 'grid grid-cols-1 gap-8' : 'grid grid-cols-1 md:grid-cols-2 gap-8'}
                 >
-                  {list.map((item) => {
+                  {list.map((item, idx) => {
                     const flatIdx = flatItems.findIndex(f => f.title === item.title);
                     const isLinkCard = item.type === 'link';
                     return (
                       <motion.div
-                        key={item.title}
+                        key={`${item.title}-${idx}`}
                         variants={motionCard}
                         onClick={() => onOpenModal(item.type, item.src, item.title, item.fullDesc || '', flatIdx, flatItems, item.slides, categoryKey)}
-                        className={`portfolio-card group border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] transition-all duration-500 hover:border-[#1A1A1A] dark:hover:border-zinc-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_12px_30px_rgba(255,255,255,0.02)] ${isLinkCard ? 'bg-zinc-50 dark:bg-zinc-950' : 'bg-white dark:bg-zinc-900'}`}
+                        className={`portfolio-card group border border-white/10 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-white/40 hover:shadow-[0_12px_30px_rgba(0,0,0,0.5)] ${isLinkCard ? 'bg-white/[0.04] backdrop-blur-md' : 'bg-white/[0.06] backdrop-blur-md'}`}
                       >
                         {isLinkCard ? (
                           <div className="p-5 md:p-6 flex flex-col gap-3">
                             <div className="flex items-center justify-between">
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                                 {item.platform || 'LINK'}
                               </span>
                               <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 font-semibold">
@@ -370,14 +378,14 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                           </div>
                         ) : (
                           <>
-                            <div className="relative aspect-[16/10] bg-zinc-50 dark:bg-zinc-950 border-b border-[#E5E5E5] dark:border-zinc-800/80 overflow-hidden">
+                            <div className="relative aspect-[16/10] bg-white/[0.04] border-b border-white/10 overflow-hidden">
                               <img
                                 src={item.img}
                                 onError={(e) => onImageError(e, item)}
                                 alt={item.title}
                                 className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.01] transition-all duration-700 ease-out"
                               />
-                              <div className="absolute top-4 right-4 p-2 bg-white/90 dark:bg-zinc-800/90 rounded-full border border-[#E5E5E5] dark:border-zinc-700 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                              <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/20 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                 {item.type === 'video' && <Play size={10} className="text-zinc-800 dark:text-zinc-200 fill-zinc-800 dark:fill-zinc-200" />}
                                 {item.type === 'image' && <Camera size={10} className="text-zinc-800 dark:text-zinc-200" />}
                                 {item.type === 'web' && <Globe size={10} className="text-zinc-800 dark:text-zinc-200" />}
@@ -422,19 +430,19 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             {stageData.items.map((item, idx) => {
-              const itemImg = item.type === 'album' ? ALBUM_IMAGES[0] : item.img;
+              const itemImg = item.img || ALBUM_IMAGES[0];
               const isLinkCard = item.type === 'link';
               return (
                 <motion.div
-                  key={item.title}
+                  key={`${item.title}-${idx}`}
                   variants={motionCard}
                   onClick={() => onOpenModal(item.type, item.src, item.title, item.fullDesc || '', idx, flatItems, item.slides, categoryKey)}
-                  className={`portfolio-card category-section scroll-mt-28 group border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] transition-all duration-500 hover:border-[#1A1A1A] dark:hover:border-zinc-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_12px_30px_rgba(255,255,255,0.02)] ${isLinkCard ? 'bg-zinc-50 dark:bg-zinc-950' : 'bg-white dark:bg-zinc-900'}`}
+                  className={`portfolio-card category-section scroll-mt-28 group border border-[#E5E5E5] dark:border-zinc-800 rounded-2xl overflow-hidden cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.01)] transition-all duration-500 hover:border-[#1A1A1A] dark:hover:border-zinc-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_12px_30px_rgba(255,255,255,0.02)] ${isLinkCard ? 'bg-white/[0.04] backdrop-blur-md' : 'bg-white/[0.06] backdrop-blur-md'}`}
                 >
                   {isLinkCard ? (
                     <div className="p-5 md:p-6 flex flex-col gap-3">
                       <div className="flex items-center justify-between">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white dark:bg-zinc-900 border border-[#E5E5E5] dark:border-zinc-800 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/10 text-[9px] font-mono font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                           {item.platform || 'LINK'}
                         </span>
                         <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 font-semibold">
@@ -455,14 +463,14 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
                     </div>
                   ) : (
                     <>
-                      <div className="relative aspect-[16/10] bg-zinc-50 dark:bg-zinc-950 border-b border-[#E5E5E5] dark:border-zinc-800/80 overflow-hidden">
+                      <div className="relative aspect-[16/10] bg-white/[0.04] border-b border-white/10 overflow-hidden">
                         <img
                           src={itemImg}
                           onError={(e) => onImageError(e, item)}
                           alt={item.title}
                           className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.01] transition-all duration-700 ease-out"
                         />
-                        <div className="absolute top-4 right-4 p-2 bg-white/90 dark:bg-zinc-800/90 rounded-full border border-[#E5E5E5] dark:border-zinc-700 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/20 shadow-sm text-zinc-800 dark:text-zinc-200 opacity-80 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                           {item.type === 'video' && <Play size={10} className="text-zinc-800 dark:text-zinc-200 fill-zinc-800 dark:fill-zinc-200" />}
                           {item.type === 'image' && <Camera size={10} className="text-zinc-800 dark:text-zinc-200" />}
                           {item.type === 'web' && <Globe size={10} className="text-zinc-800 dark:text-zinc-200" />}
@@ -500,7 +508,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
 
       {/* Floating Index Dots Tracker Sidebar */}
       {subTitles.length > 1 && (
-        <div className="fixed right-6 md:right-12 top-1/2 -translate-y-1/2 flex flex-col gap-4 items-center z-40 bg-white/90 dark:bg-zinc-950/90 p-3 rounded-full border border-[#E5E5E5] dark:border-zinc-800 shadow-sm backdrop-blur-md">
+        <div className="fixed right-6 md:right-12 top-1/2 -translate-y-1/2 flex flex-col gap-4 items-center z-40 bg-black/40 dark:bg-black/40 p-3 rounded-full border border-white/15 shadow-lg backdrop-blur-xl">
           {subTitles.map((title, idx) => (
             <button
               key={idx}
@@ -508,7 +516,7 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
               className="relative group focus:outline-none cursor-pointer"
             >
               {/* Tooltip on Hover */}
-              <span className="absolute right-8 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-[#1A1A1A] dark:bg-zinc-100 text-[9px] font-mono text-white dark:text-black rounded whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-md">
+              <span className="absolute right-8 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-black/80 text-[9px] font-mono text-white rounded border border-white/15 whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-md backdrop-blur-md">
                 {title}
               </span>
 
@@ -516,8 +524,8 @@ export default function SubStage({ categoryKey, stageData, onBack, onOpenModal }
               <div 
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
                   idx === activeIndex 
-                    ? 'bg-[#1A1A1A] dark:bg-zinc-200 scale-125 shadow-[0_2px_8px_rgba(26,26,26,0.15)] dark:shadow-[0_2px_8px_rgba(255,255,255,0.08)]' 
-                    : 'bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400 dark:hover:bg-zinc-600'
+                    ? 'bg-white scale-125 shadow-[0_2px_10px_rgba(255,255,255,0.35)]' 
+                    : 'bg-zinc-600 hover:bg-zinc-400'
                 }`}
               />
             </button>
